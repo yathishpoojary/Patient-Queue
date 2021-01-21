@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style ></style>
+     <link rel="stylesheet" href="my.css"> 
+</head>
+<body>
+                
+              <h3>Enter the Patient Details</h3>       
+    <!-- <form action=""> -->
+      <label for="fname">Patient Name</label>
+        <input type="text" class="name" id ="name" placeholder="Enter Patient Name.... " required> <br>
+       
+        <label >Address</label>
+   <input type="text" class="address" id ="address" placeholder="Address..." required > <br>
+
+      <label >Contact Number</label>
+        <input type="number"  class="contactNumber" id="number" placeholder="1234567890 "  required ><br>
+        <label > Problems:</label>
+       <select name="problem" class="problem" id="problem"  required>
+            <option >Choose </option>
+            <option value="fever">Fever
+            <option value="stomach Pain">Stomach Pain
+            <option value="cold">Cold
+            <option value="Cough">Cough
+            <option value="dental">Dental
+        </select> 
+      <br>
+        <input type="submit" value="submit"  onclick="submitPatientData()">
+    <!-- </form> -->
+     <div>    
+      <input type="text" id="myInput" onkeyup="search()" placeholder="Search for names.." title="Type in a name">
+    </div> 
+   
+      <table id="myTable">
+        <tr>
+          <td>NAME</td>
+          <td>ADDRESS</td>
+          <td>CONTACT NUMBER</td>
+          <td>PROBLEM</td>
+        </tr>
+        
+    
+      <br>
+    <!-- <ul class="show-list"></ul> -->
+</div>
+<script src="app2.js"></script>
+</body>
+</html>
