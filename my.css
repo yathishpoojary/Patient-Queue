@@ -52,4 +52,17 @@ body {
   tr:nth-child(even) {
     background-color: #dddddd;
   }
-    
+
+    /* .rowDiv {
+      background-color: mediumorchid;
+    }
+    .lableClass{
+      color: maroon;
+      width: 25%;
+      background-color: mediumblue;
+    }
+
+    .inputClass{
+      width: 25%;
+      background-color: mediumblue;
+    } */

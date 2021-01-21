@@ -11,13 +11,18 @@ function insertRowToTable(patient)
     var cell2=row.insertCell(1);
     var cell3=row.insertCell(2);
     var cell4=row.insertCell(3);
+    var cell5= row.insertCell(4);
 
     cell1.innerHTML = patient.pName;
     cell2.innerHTML = patient.pAddress;
     cell3.innerHTML =patient.pNumber;
    cell4.innerHTML = patient.pProblem;
+   cell5.innerHTML=  '<button  type="button" onClick="deleteFunction(this)" >'
+   + '<span class="glyphicon glyphicon-pencil"></span>REMOVE</button>'//"Delete";  //  <button> delete </button>   ///  '<button class=\"btn btn-primary btn-xs my-xs-btn\" type='button' onClick='changeRec(".$num.")'></button>';
+   console.log("table", table, patient)
 
 } 
+
 
 
 
@@ -27,19 +32,33 @@ function submitPatientData(){
   var address=document.getElementById('address').value;
  var problem=document.getElementById('problem').value;
 
- var patient = new Object();
- patient.pName =name;
- patient.pAddress = address;
- patient.pNumber = number;
- patient.pProblem = problem;
- patientList.push(patient);
+ if(name=="" || name==undefined){
+   alert("Please enter name");
+ }else if(number==null || number==undefined){
+  alert("Please enter number");
+}else if(address==null || address==undefined){
+  alert("Please enter address");
+}else if(problem==null || problem==undefined || problem == "Choose"){
+  alert("Please select problem");
+}else{
 
-    insertRowToTable(patient)
+  var patient = new Object();
+  patient.pName =name;
+  patient.pAddress = address;
+  patient.pNumber = number;
+  patient.pProblem = problem;
+  patientList.push(patient);
+ 
+     insertRowToTable(patient)
+}
+
+
    
 
 }
   
 function search() {
+  console.log("searcht")
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
@@ -57,8 +76,36 @@ function search() {
     }       
   }
 }
+
+function deleteFunction(obj)
+{
+
+  var id =  obj.parentElement.parentElement.rowIndex;
+  document.getElementById("myTable").deleteRow(id);
+
+  for(var i=0;i<patientList.length;i++){
+    if((id-1) == i){
+      patientList.splice(i,1);
+    }
+  }
+
+  console.log("patientListpatientListpatientList", patientList)
+
+}
    
    
+
+// var index,table =document.getElementById('table');
+// console.log(index+" the value of");
+// for(int i=1;i<table.row.length;i++)
+// {
+//   table[i].cell5.onClick=function()
+//   {
+//     index=this.parentElement.rowIndex;
+//     console.log(index);
+//     table.deleteRow(index);
+//   }
+// }
    
    // creating table
 
