@@ -23,9 +23,6 @@ function insertRowToTable(patient)
 
 } 
 
-
-
-
 function submitPatientData(){
   var name=document.getElementById('name').value;
   var number=document.getElementById('number').value;
@@ -58,7 +55,6 @@ function submitPatientData(){
 }
   
 function search() {
-  console.log("searcht")
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
@@ -118,12 +114,6 @@ function deleteFunction(obj)
   //  var row=document.createElement("tr");
 
   //  console.log("tr is row "+row);
-
-
-
-
-
-
 
 
 // con.connect(function(err) {
