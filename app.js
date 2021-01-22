@@ -1,114 +1,165 @@
 
-// This is use to store the data which user entered
-const userName=document.querySelector(".name");
-const address=document.querySelector(".address");
-const phoneNumber=document.querySelector(".contactNumber");
-const problem=document.querySelector(".problem");
+patientList = [];
 
-let patientList = [];
+initialize();
 
-// submit button
-const submit=document.querySelector(".input-addList");
-// show details
-const todoList=document.querySelector(".show-list");
+function insertRowToTable(patient)
+{
 
-//submit button working
-submit.addEventListener('click',addTodo);
+  var table=document.getElementById("myTable");
 
-// function addToTable(patientList){
-//     console.log("bsdb", patientList);
+    var row=table.insertRow();
+    var cell1=row.insertCell(0);
+    var cell2=row.insertCell(1);
+    var cell3=row.insertCell(2);
+    var cell4=row.insertCell(3);
+    var cell5= row.insertCell(4);
 
-//     // if($("#selector").length) {
-//     //     //object already exists
-//     // }
-//     var table = document.createElement("pTable");
-//     table.setAttribute("id", "myTable");
-//     document.body.appendChild(table);
+    cell1.innerHTML = patient.pName;
+    cell2.innerHTML = patient.pAddress;
+    cell3.innerHTML =patient.pNumber;
+   cell4.innerHTML = patient.pProblem;
+   cell5.innerHTML=  '<button  type="button" onClick="deleteFunction(this)" >'
+   + '<span class="glyphicon glyphicon-pencil"></span>REMOVE</button>'//"Delete";  //  <button> delete </button>   ///  '<button class=\"btn btn-primary btn-xs my-xs-btn\" type='button' onClick='changeRec(".$num.")'></button>';
+   console.log("table", table, patient)
 
-//     for (var i = 0; i < patientList.length; i++) {
-//        var patient = patientList[i];
-//        var row = document.createElement("TR");
-   
-//        var refCell = document.createElement("TD");
-//        var growerCell = document.createElement("TD");
-//        var itemCell = document.createElement("TD");
-   
-//        row.appendChild(refCell);
-//        row.appendChild(growerCell);
-//        row.appendChild(itemCell);
-   
-//        var ref = document.createTextNode(patient.pName);
-//        var grower = document.createTextNode(patient.pAddress);
-//        var item = document.createTextNode(patient.pNumber);
-   
-//        refCell.appendChild(ref);
-//        growerCell.appendChild(grower);
-//        itemCell.appendChild(item);
-   
-//        table.appendChild(row);
-//        document.body.appendChild(document.createElement('hr'));
-//      }
+} 
 
-// }
+function submitPatientData(){
 
-function addTodo(e){
+ // createDatabase();
+    var name=document.getElementById('name').value;
+    var number=document.getElementById('number').value;
+    var address=document.getElementById('address').value;
+    var problem=document.getElementById('problem').value;
 
-    var patient = new Object();
-    patient.pName = userName.value;
-    patient.pAddress = address.value;
-    patient.pNumber = phoneNumber.value;
-    patient.pProblem = problem.value;
+    if(name=="" || name==undefined){
+      alert("Please enter name");
+    }else if(number=="" || number==undefined){
+      alert("Please enter number");
+    }else if(address=="" || address==undefined){
+      alert("Please enter address");
+    }else if(problem=="" || problem==undefined || problem == "Choose"){
+      alert("Please select problem");
+    }else{
 
-    patientList.push(patient);
+      var patient = new Object();
+      patient.pName =name;
+      patient.pAddress = address;
+      patient.pNumber = number;
+      patient.pProblem = problem;
 
-    addToTable(patientList);
-    
-    const todoDiv=document.createElement('div');
-       todoDiv.className="todos";
-
-        const todos=document.createElement('li');
-        todos.className="todo-name";
-
-        const todoAddress=document.createElement('li')
-        todoAddress.className="todo-address";
-
-        const todoNumber=document.createElement('li');
-        todoNumber.className="todo-Number";
-
-        const todoproblem=document.createElement('li');
-        todoproblem.className="todoproblem";
-
-    todos.appendChild(document.createTextNode(userName.value));
-    console.log(" this is username"+userName.value);
-    console.log(todos);
-    
-
-    todoAddress.appendChild(document.createTextNode(address.value));
-    console.log(`this is the address ${address.value}`);
-
-    todoNumber.appendChild(document.createTextNode(phoneNumber.value));
-    todoproblem.appendChild(document.createTextNode(problem.value));
-
-
-    todoDiv.appendChild(todoNumber);
-    todoDiv.appendChild(todos);
-    todoDiv.appendChild(todoAddress);
-    todoDiv.appendChild(todoproblem);
-    address.value="";
-    userName.value="";
-
-    todoList.appendChild(todoDiv);
-
-    var send = { "name": ""+userName.value, "address": address.value , "Phone Number": phoneNumber.value , "Problem": problem.value };
-    var sendString = JSON.stringify(send);
-    alert(sendString);
-    xhttp.send(send);
-
-
-    e.preventDefault();
+        if(patientList){
+          patientList.push(patient);
+        }
+        insertRowToTable(patient);
+        setPatientListToLocalStorage();   
+    }
+}
+  
+function search() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
 }
 
+function deleteFunction(obj)
+{
+  var id =  obj.parentElement.parentElement.rowIndex;
+  document.getElementById("myTable").deleteRow(id);
 
-console.log(userName);
+  for(var i=0;i<patientList.length;i++){
+    if((id-1) == i){
+      patientList.splice(i,1);
+    }
+  }
 
-let r=exports("app.js");
+  setPatientListToLocalStorage();
+}
+
+function createDatabase(){
+  try{
+   if(window.openDatabase){
+           var shortName   =  'db_edentiti';
+           var version   =  '1.0';
+           var displayName  =  'Edentiti Information';
+           var maxSize   =  65536; // in bytes
+           db    =  openDatabase(shortName, version, displayName, maxSize);
+                  alert('Sqlite Database created');
+       }
+  }catch(e){
+   alert(e);
+  }
+}
+   
+function setPatientListToLocalStorage(){
+  localStorage.setItem('PatientList', JSON.stringify(patientList));
+}
+
+function getPatientListFromLocalStorage(){
+  const data = JSON.parse(localStorage.getItem('PatientList'));
+  if(data){
+    patientList = data;
+  }else{
+    patientList = [];
+  }
+}
+
+function removePatientListFromLocalStorage(){
+  localStorage.removeItem('PatientList');
+  patientList = [];
+}
+
+function initialize(){
+  getPatientListFromLocalStorage();
+
+  if(patientList){
+    for(var i=0;i<patientList.length;i++){
+      insertRowToTable(patientList[i]);
+    }
+  }
+}  
+
+// var index,table =document.getElementById('table');
+// console.log(index+" the value of");
+// for(int i=1;i<table.row.length;i++)
+// {
+//   table[i].cell5.onClick=function()
+//   {
+//     index=this.parentElement.rowIndex;
+//     console.log(index);
+//     table.deleteRow(index);
+//   }
+// }
+   
+   // creating table
+
+  //  var table=document.createElement("table");
+  //  console.log("table is "+table);
+
+  //  var tableBody=document.createElement("tbody");
+  //  console.log("table body "+tableBody);
+
+  //  var row=document.createElement("tr");
+
+  //  console.log("tr is row "+row);
+
+
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
+

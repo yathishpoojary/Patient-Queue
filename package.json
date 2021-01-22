@@ -1,0 +1,22 @@
+{
+  "name": "com.intership",
+  "version": "1.0.0",
+  "description": "Patient list app",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm run test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yathishpoojary/Patient-Queue.git"
+  },
+  "author": "Yathish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yathishpoojary/Patient-Queue/issues"
+  },
+  "homepage": "https://github.com/yathishpoojary/Patient-Queue#readme"
+}

@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-<!-- 
-<link rel="stylesheet" href="my.css"> -->
+    <meta name="viewport" >
+    <title>Application</title>
+    <style ></style>
+     <link rel="stylesheet" href="my.css"> 
 </head>
 <body>
+                
+              <h3 class="title" style="font-size: 30px;">Patient Portal</h3>       
+    <!-- <form action=""> -->
+      <div class='formDiv'>
+        <h3 style="text-align: center;">Patient Details</h3>       
+        <div class='rowDiv'>
+          <label class='lableClass' for="fname">Patient Name</label>
+          <input class='inputClass' type="text" class="name" id ="name" placeholder="Enter Patient Name.... " required> <br>
+        </div>
+
+        <div class='rowDiv'>  
+          <label class='lableClass'>Address</label>
+          <input class='inputClass' type="text" class="address" id ="address" placeholder="Address..." required > <br>       
+        </div>
+
+        <div class='rowDiv'>
+          <label class='lableClass'>Contact Number</label>
+          <input class='inputClass' type="number"  class="contactNumber" id="number" placeholder="1234567890 "  required ><br>
+        </div>
+
+        <div class='rowDiv'>
+          <label class='lableClass' > Problems</label>
+          <select class='inputClass' name="problem" class="problem" id="problem"  required>
+               <option >Choose </option>
+               <option value="fever">Fever
+               <option value="stomach Pain">Stomach Pain
+               <option value="cold">Cold
+               <option value="Cough">Cough
+               <option value="dental">Dental
+           </select> 
+        </div>
+      <br>
+      <div class="buttonDiv" >
+        <input type="submit" value="submit"  onclick="submitPatientData()">
+      </div>
     
-    <form action="">
-
-        name: <input type="text" class="name" placeholder="Enter Patient Name.... " required>
-      address  Address: <input type="text" class="address" placeholder="Address..." required >
-        Contact Number: <input type="number"  class="contactNumber" placeholder="1234567890 " required >
-       Problems: <select name="problem" class="problem"  required>
-            <option value="fever">Fever
-            <option value="stomach Pain">Stomach Pain
-            <option value="cold">Cold
-            <option value="Cough">Cough
-            <option value="dental">Dental
-            
-        </select> 
-        <input type="submit" value="submit" class="input-addList">
-    </form>
+     
+      </div>
     
-    <div class="list-Container">
-
-    <ul class="show-list"></ul>
-
-    <!-- <table id="pTable" style="width: 100%">
-        <tr>
-          <td valign="bottom">Company Name
-            <br />Tel Num
-            <br />Location, Postcode</td>
-          <td>
-            <button onclick="addTable(ORDER.orders)">Click me</button>
-          </td>
-          <td align="right" valign="bottom">
-            <a href="#">Home</a> &nbsp;<a href="#">About</a> &nbsp;<a href="#">Help</a> &nbsp;<a href="#">Contact</a>
-          </td>
-        </tr>
-      </table> -->
-
-    
+      
+    <!-- </form> -->
+     <div class=searchDiv>    
+      <input type="submit" value="Refresh"  onclick="getPatientListFromLocalStorage()">
+      <input type="submit" value="Reset"  onclick="removePatientListFromLocalStorage()">
     </div>
-    <script src="app.js"></script>
+    <div class=searchDiv>    
+      <input type="text" id="myInput" onkeyup="search()" placeholder="Search..." title="Type in a name">
+    </div> 
+   
+      <table id="myTable">
+        <tr>
+          <td>NAME</td>
+          <td>ADDRESS</td>
+          <td>CONTACT NUMBER</td>
+          <td>PROBLEM</td>
+          <td>DELETE</td>
+        </tr>
+        
+    
+      <br>
+    <!-- <ul class="show-list"></ul> -->
+</div>
+<script src="app.js"></script>
 </body>
 </html>
