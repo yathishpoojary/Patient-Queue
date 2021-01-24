@@ -51,19 +51,19 @@
     <!-- </form> -->
      <div class=searchDiv>    
       <input type="submit" value="Refresh"  onclick="getPatientListFromLocalStorage()">
-      <input type="submit" value="Reset"  onclick="removePatientListFromLocalStorage()">
+      <input type="submit" value="Reset"  onclick="removePatientList()">
     </div>
     <div class=searchDiv>    
       <input type="text" id="myInput" onkeyup="search()" placeholder="Search..." title="Type in a name">
-    </div> 
+       </div> 
    
       <table id="myTable">
         <tr>
-          <td>NAME</td>
-          <td>ADDRESS</td>
-          <td>CONTACT NUMBER</td>
-          <td>PROBLEM</td>
-          <td>DELETE</td>
+          <th>NAME</th>
+          <th>ADDRESS</th>
+          <th>CONTACT NUMBER</th>
+          <th>PROBLEM</th>
+          <th>DELETE</th>
         </tr>
         
     

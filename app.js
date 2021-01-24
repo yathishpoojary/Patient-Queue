@@ -3,9 +3,12 @@ patientList = [];
 
 initialize();
 
+
+// insering the user values into table
 function insertRowToTable(patient)
 {
 
+  
   var table=document.getElementById("myTable");
 
     var row=table.insertRow();
@@ -25,6 +28,7 @@ function insertRowToTable(patient)
 
 } 
 
+// user submitted data
 function submitPatientData(){
 
  // createDatabase();
@@ -33,6 +37,7 @@ function submitPatientData(){
     var address=document.getElementById('address').value;
     var problem=document.getElementById('problem').value;
 
+    // validate user entered data
     if(name=="" || name==undefined){
       alert("Please enter name");
     }else if(number=="" || number==undefined){
@@ -43,13 +48,16 @@ function submitPatientData(){
       alert("Please select problem");
     }else{
 
+      // if data is correct, create Object of the data 
       var patient = new Object();
       patient.pName =name;
       patient.pAddress = address;
       patient.pNumber = number;
       patient.pProblem = problem;
 
+      // condition is true 
         if(patientList){
+          // push into array
           patientList.push(patient);
         }
         insertRowToTable(patient);
@@ -58,21 +66,25 @@ function submitPatientData(){
 }
   
 function search() {
-  var input, filter, table, tr, td, i, txtValue;
+  var input, filter, table, tr, td, i, txtValue, cell;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
+    td = tr[i].getElementsByTagName("td");
+    for(j=0;j< td.length;j++){
+      txtValue = td[j].innerText;
+      if (txtValue) {
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          break;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }   
+    }
+        
   }
 }
 
@@ -121,6 +133,14 @@ function getPatientListFromLocalStorage(){
 function removePatientListFromLocalStorage(){
   localStorage.removeItem('PatientList');
   patientList = [];
+}
+
+function removePatientList(){
+  for(i=patientList.length;i>0;i--){
+    document.getElementById("myTable").deleteRow(i);
+  }
+  removePatientListFromLocalStorage();
+
 }
 
 function initialize(){
