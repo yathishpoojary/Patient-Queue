@@ -74,6 +74,7 @@ function search() {
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td");
     for(j=0;j< td.length;j++){
+      if(j==0||j==2||j==3){
       txtValue = td[j].innerText;
       if (txtValue) {
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -82,7 +83,8 @@ function search() {
         } else {
           tr[i].style.display = "none";
         }
-      }   
+      } 
+    }  
     }
         
   }
