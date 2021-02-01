@@ -23,7 +23,7 @@ function insertRowToTable(patient)
     cell3.innerHTML =patient.pNumber;
    cell4.innerHTML = patient.pProblem;
    cell5.innerHTML=  '<button  type="button" onClick="deleteFunction(this)" >'
-   + '<span class="glyphicon glyphicon-pencil"></span>REMOVE</button>'//"Delete";  //  <button> delete </button>   ///  '<button class=\"btn btn-primary btn-xs my-xs-btn\" type='button' onClick='changeRec(".$num.")'></button>';
+   + 'REMOVE</button>'//"Delete";  <span class="glyphicon glyphicon-pencil"></span>   //  <button> delete </button>   ///  '<button class=\"btn btn-primary btn-xs my-xs-btn\" type='button' onClick='changeRec(".$num.")'></button>';
    console.log("table", table, patient)
 
 } 
@@ -55,6 +55,7 @@ function submitPatientData(){
       patient.pNumber = number;
       patient.pProblem = problem;
 
+      submitpatient(patient);
       // condition is true 
         if(patientList){
           // push into array
@@ -66,18 +67,19 @@ function submitPatientData(){
 }
   
 function search() {
-  var input, filter, table, tr, td, i, txtValue, cell;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
+  var     cell;
+ var input = document.getElementById("myInput");
+ var  convertUpper = input.value.toUpperCase();
+ const table = document.getElementById("myTable");
+   var tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td");
+  var  td = tr[i].getElementsByTagName("td");
     for(j=0;j< td.length;j++){
       if(j==0||j==2||j==3){
-      txtValue = td[j].innerText;
-      if (txtValue) {
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    var   textValue = td[j].innerText;
+      if (textValue) {
+        if (textValue.toUpperCase().indexOf(convertUpper) > -1) 
+        {
           tr[i].style.display = "";
           break;
         } else {
@@ -155,33 +157,24 @@ function initialize(){
   }
 }  
 
-// var index,table =document.getElementById('table');
-// console.log(index+" the value of");
-// for(int i=1;i<table.row.length;i++)
-// {
-//   table[i].cell5.onClick=function()
-//   {
-//     index=this.parentElement.rowIndex;
-//     console.log(index);
-//     table.deleteRow(index);
-//   }
-// }
-   
-   // creating table
+function submitpatient(patient){
 
-  //  var table=document.createElement("table");
-  //  console.log("table is "+table);
-
-  //  var tableBody=document.createElement("tbody");
-  //  console.log("table body "+tableBody);
-
-  //  var row=document.createElement("tr");
-
-  //  console.log("tr is row "+row);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+         // document.getElementById("demo").innerHTML = this.responseText;
+         alert(this.responseText)
+   }
+  };
+  xhttp.open("POST"," http://localhost:8080/submitPatientData",true );
+  xhttp.setRequestHeader("Content-type","application/json");
+  console.log("datadata", patient)
+  var data = JSON.stringify(patient); 
+  console.log("called", data)
+  xhttp.send(data);
 
 
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
+  
+}  
+
 

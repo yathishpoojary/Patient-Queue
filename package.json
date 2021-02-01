@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Patient list app",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "npm run test",
