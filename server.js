@@ -50,7 +50,6 @@ MongoClient.connect(connectionString, (err, client) => {
   app.post('/removeAllPatients', (req, res) => {
     patientCollection.deleteMany({}, function (err, obj) {
       if (err) throw err;
-
       if (obj.deletedCount == 0) {
         res.send("No Patient data to delete ");
       } else {
