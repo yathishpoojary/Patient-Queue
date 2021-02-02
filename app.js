@@ -57,12 +57,6 @@ function submitPatientData(){
 
       submitpatient(patient);
       // condition is true 
-        if(patientList){
-          // push into array
-          patientList.push(patient);
-        }
-        insertRowToTable(patient);
-        setPatientListToLocalStorage();   
     }
 }
   
@@ -95,15 +89,16 @@ function search() {
 function deleteFunction(obj)
 {
   var id =  obj.parentElement.parentElement.rowIndex;
-  document.getElementById("myTable").deleteRow(id);
+ // document.getElementById("myTable").deleteRow(id);
 
   for(var i=0;i<patientList.length;i++){
     if((id-1) == i){
-      patientList.splice(i,1);
+    //  patientList.splice(i,1);
+      deletePatientData(patientList[i]);
     }
   }
 
-  setPatientListToLocalStorage();
+ // setPatientListToLocalStorage();
 }
 
 function createDatabase(){
@@ -140,22 +135,49 @@ function removePatientListFromLocalStorage(){
 }
 
 function removePatientList(){
+
   for(i=patientList.length;i>0;i--){
-    document.getElementById("myTable").deleteRow(i);
+    document.getElementById("myTable").deleteRow(i);  
   }
   removePatientListFromLocalStorage();
 
 }
 
 function initialize(){
-  getPatientListFromLocalStorage();
+ // getPatientListFromLocalStorage();
+//  if(patientList){
+//   for(var i=0;i<patientList.length;i++){
+//     insertRowToTable(patientList[i]);
+//   }
+// }
 
-  if(patientList){
-    for(var i=0;i<patientList.length;i++){
-      insertRowToTable(patientList[i]);
-    }
-  }
+ getPatientData();
+
+ 
 }  
+
+function getPatientData(){
+  console.log("curser entered to the script tag ...");
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+         // document.getElementById("demo").innerHTML = this.responseText;
+         console.log("this.responseText", this.responseText)
+        // alert("successfully submitted")
+
+        patientList =  JSON.parse(this.responseText);
+        console.log("nsjfnkjsafn", patientList);
+        if(patientList){
+          for(var i=0;i<patientList.length;i++){
+            insertRowToTable(patientList[i]);
+          }
+        }
+   }
+  };
+  xhttp.open("GET"," http://localhost:8080/getPatients",true );
+  xhttp.send();
+} 
 
 function submitpatient(patient){
 
@@ -163,18 +185,58 @@ function submitpatient(patient){
   xhttp.onreadystatechange = function() {
    if (this.readyState == 4 && this.status == 200) {
          // document.getElementById("demo").innerHTML = this.responseText;
-         alert(this.responseText)
+         alert(this.responseText);
+
+         if(patientList){
+          // push into array
+          patientList.push(patient);
+        }
+        insertRowToTable(patient);
+        setPatientListToLocalStorage();   
    }
   };
   xhttp.open("POST"," http://localhost:8080/submitPatientData",true );
   xhttp.setRequestHeader("Content-type","application/json");
-  console.log("datadata", patient)
   var data = JSON.stringify(patient); 
-  console.log("called", data)
   xhttp.send(data);
-
-
-  
 }  
 
 
+function deletePatientData(patient){
+
+  // fetch("http://localhost:8080/removePatients", {
+  //   method: 'delete',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({
+  //     name: 'Darth Vadar'
+  //   })
+  // })
+  //   .then(res => {
+  //     console.log("res", res)
+  //     if (res.ok) return res.json()
+  //   })
+  //   .then(data => {
+  //     console.log("ookk", data)
+  //   })
+  // console.log("curser entered to the script tag ...", patient);
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+         // document.getElementById("demo").innerHTML = this.responseText;
+         console.log("this.responseText", this.responseText)
+        // alert("successfully submitted")
+
+        // patientList =  JSON.parse(this.responseText);
+        // console.log("nsjfnkjsafn", patientList);
+        // if(patientList){
+        //   for(var i=0;i<patientList.length;i++){
+        //     insertRowToTable(patientList[i]);
+        //   }
+        // }
+   }
+  };
+  xhttp.open("DELETE"," http://localhost:8080/removePatients",true );
+  var data = JSON.stringify(patient); 
+  xhttp.send(data);
+} 

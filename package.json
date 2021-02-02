@@ -4,9 +4,14 @@
   "description": "Patient list app",
   "main": "app.js",
   "dependencies": {
-    "cors": "^2.8.5"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
   "scripts": {
     "test": "npm run test",
     "start": "node server.js"
