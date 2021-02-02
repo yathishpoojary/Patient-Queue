@@ -43,14 +43,16 @@ MongoClient.connect(connectionString,(err,client)=> {
       })
        
 
-      app.delete('/removePatients', (req, res) => {
-
-        console.log("reee", req);
+      app.post('/removePatients', (req, res) => {
+        console.log("remove patient method")
+        console.log("delete patient request object is ", req.body);
 
         var myquery = { pName: req.body.pName };
+      //  var myquery = { _id: req.body._id };
         patientCollection.deleteOne(myquery, function(err, obj) {
         if (err) throw err;
-        console.log("1 document deleted");
+        console.log("1 document deleted", obj);
+        res.send(obj);
         //db.close();
   });
 

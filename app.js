@@ -3,12 +3,10 @@ patientList = [];
 
 initialize();
 
-
 // insering the user values into table
 function insertRowToTable(patient)
 {
 
-  
   var table=document.getElementById("myTable");
 
     var row=table.insertRow();
@@ -24,7 +22,7 @@ function insertRowToTable(patient)
    cell4.innerHTML = patient.pProblem;
    cell5.innerHTML=  '<button  type="button" onClick="deleteFunction(this)" >'
    + 'REMOVE</button>'//"Delete";  <span class="glyphicon glyphicon-pencil"></span>   //  <button> delete </button>   ///  '<button class=\"btn btn-primary btn-xs my-xs-btn\" type='button' onClick='changeRec(".$num.")'></button>';
-   console.log("table", table, patient)
+   //console.log("table", table, patient)
 
 } 
 
@@ -56,7 +54,7 @@ function submitPatientData(){
       patient.pProblem = problem;
 
       submitpatient(patient);
-      // condition is true 
+
     }
 }
   
@@ -90,10 +88,13 @@ function deleteFunction(obj)
 {
   var id =  obj.parentElement.parentElement.rowIndex;
  // document.getElementById("myTable").deleteRow(id);
-
+  console.log("delete id is " +id);
+  console.log("patientList.length is "+patientList.length);
   for(var i=0;i<patientList.length;i++){
     if((id-1) == i){
     //  patientList.splice(i,1);
+      console.log("  === ");
+      console.log("patient list is "+patientList[i]);
       deletePatientData(patientList[i]);
     }
   }
@@ -166,8 +167,13 @@ function getPatientData(){
          console.log("this.responseText", this.responseText)
         // alert("successfully submitted")
 
+        for(i=patientList.length;i>0;i--){
+          document.getElementById("myTable").deleteRow(i);  
+        }
+
         patientList =  JSON.parse(this.responseText);
         console.log("nsjfnkjsafn", patientList);
+
         if(patientList){
           for(var i=0;i<patientList.length;i++){
             insertRowToTable(patientList[i]);
@@ -203,28 +209,15 @@ function submitpatient(patient){
 
 
 function deletePatientData(patient){
-
-  // fetch("http://localhost:8080/removePatients", {
-  //   method: 'delete',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({
-  //     name: 'Darth Vadar'
-  //   })
-  // })
-  //   .then(res => {
-  //     console.log("res", res)
-  //     if (res.ok) return res.json()
-  //   })
-  //   .then(data => {
-  //     console.log("ookk", data)
-  //   })
-  // console.log("curser entered to the script tag ...", patient);
-
+    console.log("curser comes to delete patient data ......"+patient);
+     
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
    if (this.readyState == 4 && this.status == 200) {
          // document.getElementById("demo").innerHTML = this.responseText;
-         console.log("this.responseText", this.responseText)
+         console.log("this.responseText", this.responseText);
+         getPatientData();
+
         // alert("successfully submitted")
 
         // patientList =  JSON.parse(this.responseText);
@@ -236,7 +229,14 @@ function deletePatientData(patient){
         // }
    }
   };
-  xhttp.open("DELETE"," http://localhost:8080/removePatients",true );
+
+  xhttp.open("POST"," http://localhost:8080/removePatients",true );
+  xhttp.setRequestHeader("Content-type","application/json");
   var data = JSON.stringify(patient); 
+  console.log(data);
   xhttp.send(data);
+
+  // xhttp.open("DELETE"," http://localhost:8080/removePatients",true );
+  // var data = JSON.stringify(patient); 
+  // xhttp.send(data);
 } 
