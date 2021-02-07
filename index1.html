@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Application</title>
+    <style></style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <link rel="stylesheet" href="homePage.css">
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="myCtrl" ng-init="init()">
+        <h3 class="title" style="font-size: 30px;">Patient Portal</h3>
+        <div class='formDiv'>
+            <h3 style="text-align: center;">Patient Details</h3>
+            <div class='rowDiv'>
+                <label class='lableClass' for="fname">Patient Name</label>
+                <input class='inputClass' type="text" ng-model="name" class="name" id="name"
+                    placeholder="Enter Patient Name.... " required>
+                <br>
+            </div>
+
+            <div class='rowDiv'>
+                <label class='lableClass'>Address</label>
+                <input class='inputClass' type="text" ng-model="address" class="address" id="address"
+                    placeholder="Address..." required> <br>
+            </div>
+
+            <div class='rowDiv'>
+                <label class='lableClass'>Contact Number</label>
+                <input class='inputClass' type="number" ng-model="number" class="contactNumber" id="number"
+                    placeholder="1234567890 " required><br>
+            </div>
+             <div class='rowDiv'>
+                <label class='lableClass'> Problems</label>
+                <select class='inputClass' ng-model="problem" name="problem" class="problem" id="problem" required>
+                    <option value="">Choose </option>
+                    <option value="fever">Fever</option>
+                    <option value="stomach Pain">Stomach Pain</option>
+                    <option value="cold">Cold</option>
+                    <option value="Cough">Cough</option>
+                    <option value="dental">Dental</option>
+                </select>
+        </div>
+        <br>
+        <div class="buttonDiv">
+            <input type="submit" value="submit" ng-click="submitPatientData()">
+        </div>
+
+
+    </div>
+
+
+    <!-- </form> -->
+
+    <div class=searchDiv>
+        <input type="submit" value="Refresh" ng-click="init()">
+        <input type="submit" value="Reset" ng-click="removePatientList()">
+    </div>
+    <div class=searchDiv>
+        <input type="text" id="myInput" ng-keyup="search()" placeholder="Search..." title="Type in a name">
+    </div>
+
+    <table id="myTable">
+        <tr>
+            <th>NAME</th>
+            <th>ADDRESS</th>
+            <th>CONTACT NUMBER</th>
+            <th>PROBLEM</th>
+            <th>DELETE</th>
+        </tr>
+
+        <tr ng-repeat="patient in patientList">
+            <td>{{ patient.pName }}</td>
+            <td>{{ patient.pAddress }}</td>
+            <td>{{ patient.pNumber }}</td>
+            <td>{{ patient.pProblem }}</td>
+            <td><button type="submit" ng-click="deleteFunction(patient)">REMOVE</button></td>
+
+        </tr>
+
+        </div>
+
+
+        <script src="app1.js"></script>
+
+</body>
+
+</html>
